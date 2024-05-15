@@ -51,53 +51,58 @@ object DarkSugars extends App{
 
   //syntax sugar #3: the :: and #:: methods are special
 
-  val prependedList= 2 :: List(3,4)
+  val prependedList = 2 :: List(3, 4)
   //2.::List(3,4)
   //List(3,4).::(2)
   // ?!
 
   //scala spe: last chat decides associativity of method
-  1 :: 2 :: 3 :: List(4,5)
-  List(4,5).::(3).::(2).::(1) //equivalent
+  1 :: 2 :: 3 :: List(4, 5)
+  List(4, 5).::(3).::(2).::(1) //equivalent
 
-  class MyStream[T]{
-    def -->: (value: T) : MyStream[T] = this //actual implementation here
+  class MyStream[T] {
+    def -->:(value: T): MyStream[T] = this //actual implementation here
   }
 
 
-  val myStream=1 -->: 2-->: 3 -->: new MyStream[Int]
+  val myStream = 1 -->: 2 -->: 3 -->: new MyStream[Int]
 
   // syntax sugar #4 : multi-word method naming
-  class TeenGirl(name: String){
+  class TeenGirl(name: String) {
     def `and then said`(gossip: String): Unit = println(s"$name said $gossip")
   }
 
-  val lilly=new TeenGirl("Lilly")
+  val lilly = new TeenGirl("Lilly")
   lilly `and then said` "Scala is sweet"
 
   // syntax sugar #5: infix types
-  class Composite[A,B]
+  class Composite[A, B]
+
+  /*
   val composite: Int Composite String = ???
 
-  class -->[A,B]
-  val towards: Int --> String = ???
+  class -->[A, B]
+
+  val towards: Int --> String = ???*/
 
   // syntax sugar #6: update() is very special, much like apply()
-  val anArray= Array(1,2,3)
-  anArray(2)= 7 // rewritten to anArray.update(2,7)
+  val anArray = Array(1, 2, 3)
+  anArray(2) = 7 // rewritten to anArray.update(2,7)
   //used in mutable collections
 
 
   //syntax sugar #7: setters for mutable containers
-  class Mutable{
+  class Mutable {
     private var internalMember: Int = 0 // private for OO encapsulation
-    def member: Int= internalMember // 'getter'
+
+    def member: Int = internalMember // 'getter'
+
     def member_=(value: Int): Unit =
       internalMember = value //setter
   }
 
   val aMutableContainer = new Mutable
-  aMutableContainer.member= 42//rewritten as aMutableContainer member_=42
+  aMutableContainer.member = 42 //rewritten as aMutableContainer member_=42
 
 
 }
